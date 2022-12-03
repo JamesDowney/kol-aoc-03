@@ -35,10 +35,20 @@ var kolmafia = require("kolmafia"), console = {
 // src/main.ts
 var import_kolmafia = require("kolmafia");
 function main() {
-  var input = (0, import_kolmafia.fileToBuffer)("input.txt").trim().split(/\n/g), solution = input;
-  solution.forEach(function(element) {
-    (0, import_kolmafia.print)(element);
-  }), (0, import_kolmafia.bufferToFile)(solution.join("\n"), "output.txt");
+  var input = (0, import_kolmafia.fileToBuffer)("input.txt").trim().split(/\n/g), count1 = 0;
+  input.map(function(element) {
+    return [element.slice(0, element.length / 2), element.slice(element.length / 2)];
+  }).forEach(function(element) {
+    for (var found2 = "", i2 = element[0].length; found2 === "" && i2--; )
+      element[1].includes(element[0][i2]) && (found2 = element[0][i2]);
+    found2.charCodeAt(0) < 97 ? count1 += found2.charCodeAt(0) - 38 : count1 += found2.charCodeAt(0) - 96;
+  });
+  for (var count2 = 0, i = 0; i < input.length; i += 3) {
+    for (var found = "", j = input[i].length - 1; found === "" && j--; )
+      input[i + 1].includes(input[i][j]) && input[i + 2].includes(input[i][j]) && (found = input[i][j]);
+    found.charCodeAt(0) < 97 ? count2 += found.charCodeAt(0) - 38 : count2 += found.charCodeAt(0) - 96;
+  }
+  (0, import_kolmafia.print)("solution 1 is: " + count1), (0, import_kolmafia.print)("solution 2 is: " + count2);
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {});
